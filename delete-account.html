@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scènes — Supprimer mon compte</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            background: #faf9f7;
+            color: #2a2520;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2a2520;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .logo span { color: #b07aff; }
+        .tagline {
+            font-size: 11px;
+            color: #b07aff;
+            letter-spacing: 3px;
+            margin-bottom: 48px;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #2a2520;
+            margin-bottom: 8px;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #2a2520;
+            margin-top: 40px;
+            margin-bottom: 12px;
+        }
+        p { margin-bottom: 16px; color: #555; }
+        .separator {
+            width: 40px;
+            height: 2px;
+            background: #b07aff;
+            margin: 48px 0;
+            opacity: 0.4;
+        }
+        a { color: #b07aff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .steps {
+            margin: 24px 0;
+            padding-left: 0;
+            list-style: none;
+            counter-reset: step;
+        }
+        .steps li {
+            counter-increment: step;
+            color: #555;
+            margin-bottom: 12px;
+            padding-left: 32px;
+            position: relative;
+        }
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #b07aff;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 4px;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Sc<span>è</span>nes</div>
+        <div class="tagline">films · séries · livres</div>
+
+        <h1>Supprimer mon compte</h1>
+
+        <p>Vous pouvez supprimer votre compte Scènes directement depuis l'application. La suppression est immédiate et irréversible.</p>
+
+        <h2>Depuis l'application</h2>
+        <ol class="steps">
+            <li>Ouvrez Scènes et allez dans votre <strong>Profil</strong></li>
+            <li>Appuyez sur l'icône <strong>Paramètres</strong> (engrenage)</li>
+            <li>Faites défiler jusqu'en bas et appuyez sur <strong>Supprimer mon compte</strong></li>
+            <li>Confirmez la suppression</li>
+        </ol>
+
+        <h2>Données supprimées</h2>
+        <p>Lorsque vous supprimez votre compte, toutes vos données personnelles sont supprimées immédiatement, notamment :</p>
+        <p>— Votre profil (nom, email, photo de profil)<br>
+        — Votre journal (notes, critiques, watchlist)<br>
+        — Vos données sociales (amis, feed)<br>
+        — Vos données d'utilisation</p>
+
+        <div class="separator"></div>
+
+        <h2>Besoin d'aide ?</h2>
+        <p>Si vous ne pouvez pas accéder à l'application, vous pouvez demander la suppression de votre compte par email à <a href="mailto:armand.lavenne@gmail.com">armand.lavenne@gmail.com</a>.</p>
+
+        <div class="footer">
+            <p>Scènes — Armand Lavenne</p>
+        </div>
+    </div>
+</body>
+</html>
