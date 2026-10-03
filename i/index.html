@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Un pote t'invite sur Scènes</title>
+    <meta name="description" content="Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.">
+    <!-- La bannière Apple : « Ouvrir » si l'app est installée, « Obtenir » sinon -->
+    <meta name="apple-itunes-app" content="app-id=6759797667">
+    <!-- L'aperçu du lien dans iMessage, WhatsApp, Instagram -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Scènes">
+    <meta property="og:title" content="Un pote t'invite sur Scènes">
+    <meta property="og:description" content="Films, séries, livres : comparez vos goûts.">
+    <meta property="og:image" content="https://www.scenes-app.com/og-invite.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.scenes-app.com/og-invite.jpg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #000; --text: #fff; --dim: rgba(255,255,255,0.55); --gold: #F5E6C8; --ink: #0A0A0C; }
+        html, body { min-height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--bg); color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            display: flex; flex-direction: column; align-items: center;
+            padding: max(28px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+        }
+        .glow { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-size: cover; background-position: center; filter: blur(60px) saturate(1.2); opacity: 0.35; transform: scale(1.2); }
+        .shade { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.35), #000 75%); }
+        main { position: relative; z-index: 1; width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+        .logo { height: 34px; margin-bottom: 36px; }
+        .avatar { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; background: #1a1a1f; border: 2px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; color: var(--gold); }
+        h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.8px; line-height: 1.12; margin-top: 18px; }
+        .sub { margin-top: 10px; font-size: 16px; line-height: 1.5; color: var(--dim); max-width: 340px; }
+        .posters { display: flex; justify-content: center; margin: 30px 0 6px; height: 186px; }
+        .posters img { width: 112px; aspect-ratio: 2/3; object-fit: cover; background: #141318; box-shadow: 0 14px 30px rgba(0,0,0,0.6); }
+        .posters img:nth-child(1) { transform: rotate(-7deg) translate(18px, 8px); }
+        .posters img:nth-child(2) { transform: translateY(-4px); z-index: 2; position: relative; }
+        .posters img:nth-child(3) { transform: rotate(7deg) translate(-18px, 8px); }
+        .cta { margin-top: 30px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 9px; height: 54px; border-radius: 999px; font-weight: 700; font-size: 16px; text-decoration: none; }
+        .btn svg { width: 19px; height: 19px; }
+        .primary { background: #fff; color: var(--ink); box-shadow: 0 10px 28px rgba(0,0,0,0.5); }
+        .secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
+        .code { margin-top: 28px; width: 100%; padding: 16px 18px; border-radius: 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 14px; text-align: left; }
+        .code p { flex: 1; font-size: 14px; line-height: 1.45; color: var(--dim); }
+        .code b { color: #fff; font-weight: 700; }
+        .copy { flex-shrink: 0; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(245,230,200,0.5); background: transparent; color: var(--gold); font: 600 13px Inter, sans-serif; cursor: pointer; }
+        .hidden { display: none !important; }
+        footer { position: relative; z-index: 1; margin-top: 36px; font-size: 12px; color: rgba(255,255,255,0.35); }
+        footer a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="glow" id="glow"></div>
+    <div class="shade"></div>
+    <main>
+        <a href="/"><img class="logo" src="../logo.svg" alt="Scènes"></a>
+
+        <div id="avatar" class="avatar hidden"></div>
+        <h1 id="title">Un pote t'invite sur Scènes</h1>
+        <p class="sub" id="sub">Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.</p>
+
+        <div class="posters hidden" id="posters"></div>
+
+        <div class="cta">
+            <a class="btn primary" id="primary" href="https://apps.apple.com/app/scènes/id6759797667">Télécharger Scènes</a>
+            <a class="btn secondary" id="secondary" href="https://play.google.com/store/apps/details?id=com.scenesapp.scenes&pcampaignid=web_share">Google Play</a>
+        </div>
+
+        <!-- Le lien entre les deux comptes : le suivre depuis « Trouve tes potes » relie les deux -->
+        <div class="code hidden" id="code">
+            <p id="codeText"></p>
+            <button class="copy" id="copy" type="button">Copier</button>
+        </div>
+    </main>
+    <footer><a href="/cgu.html" id="terms">CGU</a> · <a href="/privacy-policy.html" id="privacy">Confidentialité</a></footer>
+
+    <script>
+    (function () {
+        var APP_STORE = "https://apps.apple.com/app/scènes/id6759797667";
+        var PLAY = "https://play.google.com/store/apps/details?id=com.scenesapp.scenes&pcampaignid=web_share";
+        // Clé publique (publishable) : elle ne donne accès qu'à ce que la base autorise sans compte
+        var API = "https://asbfkdlotxgpgfzidhjw.supabase.co/rest/v1/rpc/get_invite_card";
+        var KEY = "sb_publishable_8LfVXrOqqYWmM8901YVptQ_rmEywsoX";
+
+        var en = !/^fr/i.test(navigator.language || "fr");
+        var T = en ? {
+            title: "A friend invited you to Scènes", titleNamed: "{name} invited you to Scènes",
+            sub: "Films, shows, books: rate what you watch and read, and compare your taste.",
+            subCount: "{count} works rated already. Come see if you have the same taste.",
+            download: "Get Scènes", code: "Once you've signed up, search for <b>@{u}</b> at the “Find your friends” step and you'll follow each other.",
+            copy: "Copy", copied: "Copied", terms: "Terms", privacy: "Privacy"
+        } : {
+            title: "Un pote t'invite sur Scènes", titleNamed: "{name} t'invite sur Scènes",
+            sub: "Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.",
+            subCount: "Déjà {count} oeuvres notées. Viens voir si vous avez les mêmes goûts.",
+            download: "Télécharger Scènes", code: "Une fois inscrit, cherche <b>@{u}</b> à l’étape « Trouve tes potes » : vous vous suivrez tous les deux.",
+            copy: "Copier", copied: "Copié", terms: "CGU", privacy: "Confidentialité"
+        };
+        if (en) document.documentElement.lang = "en";
+
+        // Le bon store en premier, l'autre en second (sur ordinateur : les deux)
+        var ua = navigator.userAgent || "";
+        var android = /android/i.test(ua);
+        var apple = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && "ontouchend" in document);
+        var primary = document.getElementById("primary");
+        var secondary = document.getElementById("secondary");
+        if (android) {
+            primary.href = PLAY; primary.textContent = T.download;
+            secondary.href = APP_STORE; secondary.textContent = "App Store";
+        } else if (apple) {
+            primary.href = APP_STORE; primary.textContent = T.download;
+            secondary.classList.add("hidden");
+        } else {
+            primary.href = APP_STORE; primary.textContent = "App Store";
+        }
+        document.getElementById("terms").textContent = T.terms;
+        document.getElementById("privacy").textContent = T.privacy;
+        document.getElementById("title").textContent = T.title;
+        document.getElementById("sub").textContent = T.sub;
+        document.title = T.title;
+
+        var u = (new URLSearchParams(location.search).get("u") || "").toLowerCase().replace(/[^a-z0-9_]/g, "");
+        if (!u) return;
+
+        // Le pseudo à indiquer, montré seulement s'il existe (voir plus bas)
+        var code = document.getElementById("code");
+        document.getElementById("codeText").innerHTML = T.code.replace("{u}", u);
+        var copy = document.getElementById("copy");
+        copy.textContent = T.copy;
+        copy.addEventListener("click", function () {
+            var done = function () { copy.textContent = T.copied; setTimeout(function () { copy.textContent = T.copy; }, 1800); };
+            if (navigator.clipboard) navigator.clipboard.writeText("@" + u).then(done, done); else done();
+        });
+
+        var poster = function (p) {
+            if (!p) return null;
+            if (p.indexOf("http") === 0) return p;
+            return "https://image.tmdb.org/t/p/w342" + p;
+        };
+
+        fetch(API, {
+            method: "POST",
+            headers: { "apikey": KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({ p_username: u })
+        }).then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) {
+            var c = rows && rows[0];
+            if (!c) return;
+            code.classList.remove("hidden");
+            var name = (c.first_name || "").trim();
+            if (name) {
+                var title = T.titleNamed.replace("{name}", name);
+                document.getElementById("title").textContent = title;
+                document.title = title;
+            }
+            if (c.rated_count >= 5) document.getElementById("sub").textContent = T.subCount.replace("{count}", c.rated_count);
+
+            var av = document.getElementById("avatar");
+            if (c.avatar_url) {
+                var img = document.createElement("img");
+                img.className = "avatar"; img.alt = ""; img.src = c.avatar_url;
+                av.replaceWith(img);
+            } else if (name) {
+                av.textContent = name.charAt(0).toUpperCase();
+                av.classList.remove("hidden");
+            }
+
+            var urls = (c.posters || []).map(poster).filter(Boolean);
+            if (urls.length) {
+                var box = document.getElementById("posters");
+                urls.forEach(function (src) { var i = document.createElement("img"); i.alt = ""; i.src = src; box.appendChild(i); });
+                box.classList.remove("hidden");
+                document.getElementById("glow").style.backgroundImage = "url(" + urls[0] + ")";
+            }
+        }).catch(function () {});
+    })();
+    </script>
+</body>
+</html>
