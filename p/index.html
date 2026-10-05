@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Une note sur Scènes</title>
+    <meta name="description" content="Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.">
+    <!-- Les critiques des utilisateurs ne doivent pas devenir trouvables sur Google -->
+    <meta name="robots" content="noindex">
+    <!-- La bannière Apple : « Ouvrir » si l'app est installée, « Obtenir » sinon -->
+    <meta name="apple-itunes-app" content="app-id=6759797667">
+    <!-- L'aperçu du lien dans iMessage, WhatsApp, Instagram -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Scènes">
+    <meta property="og:title" content="Une note sur Scènes">
+    <meta property="og:description" content="Et toi, tu lui mets combien ?">
+    <meta property="og:image" content="https://www.scenes-app.com/og-home.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.scenes-app.com/og-home.jpg">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #000; --text: #fff; --dim: rgba(255,255,255,0.55); --gold: #F5E6C8; --ink: #0A0A0C; --card: #121214; }
+        html, body { min-height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--bg); color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            display: flex; flex-direction: column; align-items: center;
+            padding: max(28px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+        }
+        .glow { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-size: cover; background-position: center; filter: blur(60px) saturate(1.2); opacity: 0.35; transform: scale(1.2); }
+        .shade { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.35), #000 75%); }
+        main { position: relative; z-index: 1; width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+        .logo { height: 34px; margin-bottom: 30px; }
+        h1 { font-size: 26px; font-weight: 900; letter-spacing: -0.6px; line-height: 1.15; text-wrap: balance; }
+        .sub { margin-top: 10px; font-size: 16px; line-height: 1.5; color: var(--dim); max-width: 340px; }
+
+        /* La carte du post, comme dans le Feed de l'app */
+        .card { margin-top: 26px; width: 100%; background: var(--card); border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; overflow: hidden; text-align: left; box-shadow: 0 18px 40px rgba(0,0,0,0.55); }
+        .who { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+        .who img, .who .initial { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #1a1a1f; flex-shrink: 0; }
+        .who .initial { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--gold); }
+        .who span { font-size: 14px; font-weight: 600; color: #eee; }
+        .media { position: relative; width: 100%; aspect-ratio: 16 / 10; background: #14131E; display: flex; justify-content: center; overflow: hidden; }
+        .media img.wide { width: 100%; height: 100%; object-fit: cover; }
+        .media img.cover { height: 100%; aspect-ratio: 2 / 3; object-fit: cover; }
+        .stamp { position: absolute; left: 10px; bottom: 10px; display: flex; align-items: flex-end; gap: 6px; }
+        .score { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 900; transform: rotate(-8deg); }
+        .mood { width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; font-size: 13px; margin-bottom: 4px; }
+        .info { padding: 12px 14px 16px; }
+        .title { font-size: 16px; font-weight: 700; color: #EEEDF2; }
+        .meta { margin-top: 3px; font-size: 12.5px; color: #888797; }
+        .review { margin-top: 8px; font-size: 14.5px; line-height: 1.5; color: #D4C5A0; overflow-wrap: anywhere; }
+        .community { margin-top: 16px; font-size: 14px; color: var(--dim); }
+        .community b { color: #fff; font-weight: 700; }
+
+        .ask { margin-top: 26px; font-size: 22px; font-weight: 900; letter-spacing: -0.4px; }
+        .cta { margin-top: 18px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 9px; height: 54px; border-radius: 999px; font-weight: 700; font-size: 16px; text-decoration: none; }
+        .primary { background: #fff; color: var(--ink); box-shadow: 0 10px 28px rgba(0,0,0,0.5); }
+        .secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
+        .code { margin-top: 24px; width: 100%; padding: 16px 18px; border-radius: 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 14px; text-align: left; }
+        .code p { flex: 1; font-size: 14px; line-height: 1.45; color: var(--dim); }
+        .code b { color: #fff; font-weight: 700; }
+        .copy { flex-shrink: 0; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(245,230,200,0.5); background: transparent; color: var(--gold); font: 600 13px Inter, sans-serif; cursor: pointer; }
+        .hidden { display: none !important; }
+        footer { position: relative; z-index: 1; margin-top: 36px; font-size: 12px; color: rgba(255,255,255,0.35); }
+        footer a { color: inherit; }
+    </style>
+</head>
+<body>
+    <div class="glow" id="glow"></div>
+    <div class="shade"></div>
+    <main>
+        <a href="/"><img class="logo" src="../logo.svg" alt="Scènes"></a>
+
+        <h1 id="title">Une note sur Scènes</h1>
+        <p class="sub" id="sub">Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.</p>
+
+        <!-- Le post partagé, rempli si on le retrouve -->
+        <article class="card hidden" id="card">
+            <div class="who"><span id="whoAvatar" class="initial"></span><span id="whoName"></span></div>
+            <div class="media" id="media">
+                <div class="stamp"><div class="score" id="score"></div><div id="moods" style="display:flex;gap:4px"></div></div>
+            </div>
+            <div class="info">
+                <div class="title" id="workTitle"></div>
+                <div class="meta" id="workMeta"></div>
+                <p class="review hidden" id="review"></p>
+            </div>
+        </article>
+        <p class="community hidden" id="community"></p>
+
+        <p class="ask" id="ask">Et toi, tu lui mets combien ?</p>
+        <div class="cta">
+            <a class="btn primary" id="primary" href="https://apps.apple.com/app/scènes/id6759797667">Télécharger Scènes</a>
+            <a class="btn secondary" id="secondary" href="https://play.google.com/store/apps/details?id=com.scenesapp.scenes&pcampaignid=web_share">Google Play</a>
+            <a class="btn secondary hidden" id="openApp" href="#">J'ai déjà l'app</a>
+        </div>
+
+        <!-- Le lien avec la personne qui a partagé : la suivre depuis « Trouve tes potes » relie les deux comptes -->
+        <div class="code hidden" id="code">
+            <p id="codeText"></p>
+            <button class="copy" id="copy" type="button">Copier</button>
+        </div>
+    </main>
+    <footer><a href="/cgu.html" id="terms">CGU</a> · <a href="/privacy-policy.html" id="privacy">Confidentialité</a></footer>
+
+    <script>
+    (function () {
+        var APP_STORE = "https://apps.apple.com/app/scènes/id6759797667";
+        var PLAY = "https://play.google.com/store/apps/details?id=com.scenesapp.scenes&pcampaignid=web_share";
+        // Clé publique (publishable) : elle ne donne accès qu'à ce que la base autorise sans compte
+        var BASE = "https://asbfkdlotxgpgfzidhjw.supabase.co/rest/v1/rpc/";
+        var KEY = "sb_publishable_8LfVXrOqqYWmM8901YVptQ_rmEywsoX";
+
+        var en = !/^fr/i.test(navigator.language || "fr");
+        var T = en ? {
+            title: "A rating on Scènes", someone: "Someone", titleNamed: "{name} gave {title} a {score}/10",
+            sub: "Films, shows, books: rate what you watch and read, and compare your taste.",
+            ask: "What would you give it?", community: "Scènes community: <b>{avg}/10</b> · {n} ratings",
+            film: "Film", serie: "Series", livre: "Book",
+            download: "Get Scènes", open: "I already have the app",
+            code: "Once you've signed up, search for <b>@{u}</b> at the “Find your friends” step and you'll follow each other.",
+            copy: "Copy", copied: "Copied", terms: "Terms", privacy: "Privacy"
+        } : {
+            title: "Une note sur Scènes", someone: "Quelqu'un", titleNamed: "{name} a mis {score}/10 à {title}",
+            sub: "Films, séries, livres : note ce que tu vois et lis, et comparez vos goûts.",
+            ask: "Et toi, tu lui mets combien ?", community: "Communauté Scènes : <b>{avg}/10</b> · {n} notes",
+            film: "Film", serie: "Série", livre: "Livre",
+            download: "Télécharger Scènes", open: "J'ai déjà l'app",
+            code: "Une fois inscrit, cherche <b>@{u}</b> à l’étape « Trouve tes potes » : vous vous suivrez tous les deux.",
+            copy: "Copier", copied: "Copié", terms: "CGU", privacy: "Confidentialité"
+        };
+        var MOODS = { laughs: "😂", tears: "😢", chills: "😱", comfort: "☀️", adrenaline: "🔥", reflection: "🧠", passion: "❤️", intrigue: "🔎", family: "🧒", epic: "⚔️", music: "🎵", true_story: "📰" };
+        if (en) document.documentElement.lang = "en";
+
+        var $ = function (id) { return document.getElementById(id); };
+        var params = new URLSearchParams(location.search);
+        var id = (params.get("id") || "").toLowerCase();
+        var u = (params.get("u") || "").toLowerCase().replace(/[^a-z0-9_]/g, "");
+        var validId = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id);
+
+        // Le bon store en premier, l'autre en second (sur ordinateur : les deux)
+        var ua = navigator.userAgent || "";
+        var android = /android/i.test(ua);
+        var apple = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && "ontouchend" in document);
+        var primary = $("primary"), secondary = $("secondary");
+        if (android) {
+            primary.href = PLAY; primary.textContent = T.download;
+            secondary.href = APP_STORE; secondary.textContent = "App Store";
+            // Android ouvre le post dans l'app si elle est installée, sinon le Play Store
+            if (validId) {
+                var open = $("openApp");
+                open.href = "intent://post?entryId=" + id + "#Intent;scheme=seen;package=com.scenesapp.scenes;S.browser_fallback_url=" + encodeURIComponent(PLAY) + ";end";
+                open.textContent = T.open;
+                open.classList.remove("hidden");
+            }
+        } else if (apple) {
+            primary.href = APP_STORE; primary.textContent = T.download;
+            secondary.classList.add("hidden");
+        } else {
+            primary.href = APP_STORE; primary.textContent = "App Store";
+        }
+        $("terms").textContent = T.terms;
+        $("privacy").textContent = T.privacy;
+        $("title").textContent = T.title;
+        $("sub").textContent = T.sub;
+        $("ask").textContent = T.ask;
+        document.title = T.title;
+
+        var img = function (p, size) {
+            if (!p) return null;
+            if (p.indexOf("http") === 0) return p;
+            return "https://image.tmdb.org/t/p/" + size + p;
+        };
+        var scoreColor = function (s) {
+            if (s === 10) return "#F0FF99";
+            if (s >= 8) return "#99FFEE";
+            if (s >= 6) return "#99FFAA";
+            if (s >= 4) return "#FFC999";
+            return "#FF9999";
+        };
+        var rpc = function (name, body) {
+            return fetch(BASE + name, {
+                method: "POST",
+                headers: { "apikey": KEY, "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            }).then(function (r) { return r.ok ? r.json() : []; });
+        };
+
+        // Le post partagé
+        if (validId) {
+            rpc("get_shared_post", { p_id: id }).then(function (rows) {
+                var p = rows && rows[0];
+                if (!p) return;
+                var name = (p.first_name || "").trim() || T.someone;
+                var heading = T.titleNamed.replace("{name}", name).replace("{score}", p.score).replace("{title}", p.title);
+                $("title").textContent = heading;
+                document.title = heading;
+
+                $("whoName").textContent = name;
+                if (p.avatar_url) {
+                    var av = document.createElement("img"); av.alt = ""; av.src = p.avatar_url;
+                    $("whoAvatar").replaceWith(av);
+                } else {
+                    $("whoAvatar").textContent = name.charAt(0).toUpperCase();
+                }
+
+                var isBook = p.type === "livre";
+                var src = isBook ? img(p.poster, "w500") : (img(p.backdrop, "w780") || img(p.poster, "w500"));
+                if (src) {
+                    var pic = document.createElement("img");
+                    pic.alt = ""; pic.src = src;
+                    pic.className = (isBook || !p.backdrop) ? "cover" : "wide";
+                    $("media").insertBefore(pic, $("media").firstChild);
+                    $("glow").style.backgroundImage = "url(" + src + ")";
+                }
+                var sc = $("score");
+                sc.textContent = p.score;
+                sc.style.color = scoreColor(p.score);
+                sc.style.borderColor = scoreColor(p.score);
+                (p.mood || "").split(",").map(function (m) { return MOODS[m.trim()]; }).filter(Boolean).slice(0, 3).forEach(function (e) {
+                    var d = document.createElement("div"); d.className = "mood"; d.textContent = e; $("moods").appendChild(d);
+                });
+
+                $("workTitle").textContent = p.title;
+                $("workMeta").textContent = [T[p.type] || "", p.release_year, p.creator].filter(Boolean).join(" · ");
+                if (p.review) { $("review").textContent = "« " + p.review + " »"; $("review").classList.remove("hidden"); }
+                $("card").classList.remove("hidden");
+
+                // La note de la communauté, dès qu'il y a de quoi faire une moyenne
+                if (p.community_count >= 3 && p.community_avg != null) {
+                    var avg = String(p.community_avg).replace(".", en ? "." : ",");
+                    $("community").innerHTML = T.community.replace("{avg}", avg).replace("{n}", p.community_count);
+                    $("community").classList.remove("hidden");
+                }
+            }).catch(function () {});
+        }
+
+        // La personne qui a partagé : son pseudo, montré seulement s'il existe
+        if (u) {
+            $("codeText").innerHTML = T.code.replace("{u}", u);
+            var copy = $("copy");
+            copy.textContent = T.copy;
+            copy.addEventListener("click", function () {
+                var done = function () { copy.textContent = T.copied; setTimeout(function () { copy.textContent = T.copy; }, 1800); };
+                if (navigator.clipboard) navigator.clipboard.writeText("@" + u).then(done, done); else done();
+            });
+            rpc("get_invite_card", { p_username: u }).then(function (rows) {
+                if (rows && rows[0]) $("code").classList.remove("hidden");
+            }).catch(function () {});
+        }
+    })();
+    </script>
+</body>
+</html>
